@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 
 import pindro.pindro.fragments.NavigationDrawerFragment;
@@ -30,6 +31,8 @@ public class MainActivity extends Activity
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private MapFragment mMapFragment;
     private PlaceholderFragment mFragment1, mFragment2;
+
+    private GoogleMap mGoogleMap;
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -67,8 +70,11 @@ public class MainActivity extends Activity
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.add(R.id.container, mMapFragment);
             fragmentTransaction.commit();
+
+            mGoogleMap = mMapFragment.getMap();
         }
-        // update the main content by replacing fragments
+        // update the main content by showing/hiding fragments
+        // todo: use real fragments lol
         FragmentManager fragmentManager = getFragmentManager();
         if (position == 0) {
             fragmentManager.beginTransaction().show(mMapFragment).commit();
