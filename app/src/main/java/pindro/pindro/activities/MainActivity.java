@@ -8,6 +8,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,18 +19,19 @@ import android.support.v4.widget.DrawerLayout;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 
+import pindro.pindro.fragments.MyMapFragment;
 import pindro.pindro.fragments.NavigationDrawerFragment;
 import pindro.pindro.R;
 
 
 public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks{
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, MyMapFragment.OnMyMapFragmentInteractionListener{
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private MapFragment mMapFragment;
+    private MyMapFragment mMapFragment;
     private PlaceholderFragment mFragment1, mFragment2;
 
     private GoogleMap mGoogleMap;
@@ -66,12 +68,10 @@ public class MainActivity extends Activity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         if (mMapFragment == null) {
-            mMapFragment = MapFragment.newInstance();
+            mMapFragment = MyMapFragment.newInstance();
             FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
             fragmentTransaction.add(R.id.container, mMapFragment);
             fragmentTransaction.commit();
-
-            mGoogleMap = mMapFragment.getMap();
         }
         // update the main content by showing/hiding fragments
         // todo: use real fragments lol
@@ -138,6 +138,15 @@ public class MainActivity extends Activity
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onNavDrawerButton() {
+
+    }
+
+    public void onNavDrawerButton(View view) {
+        ((DrawerLayout)(findViewById(R.id.drawer_layout))).openDrawer(Gravity.LEFT);
     }
 
     /**

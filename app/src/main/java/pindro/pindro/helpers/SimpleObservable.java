@@ -9,23 +9,23 @@ import pindro.pindro.interfaces.OnChangeListener;
 /**
  * Created by jeff on 9/20/14.
  */
-public class SimpleObservable implements EasyObservable {
-    private final List<OnChangeListener> listeners = new ArrayList<OnChangeListener>(;)
+public class SimpleObservable<T> implements EasyObservable<T> {
+    private final List<OnChangeListener<T>> listeners = new ArrayList<OnChangeListener<T>>();
 
     @Override
-    public void addListener(OnChangeListener listener) {
+    public void addListener(OnChangeListener<T> listener) {
         synchronized (listeners) {
             listeners.add(listener);
         }
     }
 
     @Override
-    public void removeListener(OnChangeListener listener) {
+    public void removeListener(OnChangeListener<T> listener) {
         synchronized (listeners) {
             listeners.remove(listener);
         }
     }
-    
+
     protected void notifyObservers(final T model) {
         synchronized (listeners) {
             for (OnChangeListener listener : listeners) {

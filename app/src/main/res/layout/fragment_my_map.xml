@@ -4,10 +4,25 @@
     android:layout_height="match_parent"
     tools:context="pindro.pindro.fragments.MyMapFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <com.google.android.gms.maps.MapView android:id="@+id/mapview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+    <TextView android:id="@+id/textview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Hello World"
+        android:layout_margin="5dip"
+        android:padding="5dip"
+        android:background="@drawable/rectangle"
+        android:textColor="@color/greytext"
+        android:layout_gravity="top|center_horizontal"/>
+
+    <Button
+        android:id="@+id/nav_drawer_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:onClick="onNavDrawerButton"/>
 
 </FrameLayout>
