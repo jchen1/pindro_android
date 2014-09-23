@@ -31,101 +31,56 @@ public class MainActivity extends Activity
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-    private MyMapFragment mMapFragment;
-    private PlaceholderFragment mFragment1, mFragment2;
+
+    private Fragment[] mFragments;
+    private static final int FRAGMENT_MAP_POSITION = 0;
+    private static final int FRAGMENT_FRIENDS_POSITION = 1;
+    private static final int FRAGMENT_RECENTS_POSITION = 2;
+    private static final int FRAGMENTS_SIZE = 3;
 
     private GoogleMap mGoogleMap;
-
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
-    private CharSequence mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mFragments = new Fragment[FRAGMENTS_SIZE];
+        mFragments[FRAGMENT_MAP_POSITION] = MyMapFragment.newInstance();
+        mFragments[FRAGMENT_FRIENDS_POSITION] = PlaceholderFragment.newInstance(FRAGMENT_FRIENDS_POSITION);
+        mFragments[FRAGMENT_RECENTS_POSITION] = PlaceholderFragment.newInstance(FRAGMENT_RECENTS_POSITION);
+
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        for (Fragment f : mFragments) {
+            fragmentTransaction.add(R.id.container, f);
+        }
+        fragmentTransaction.commit();
+
         setContentView(R.layout.activity_main);
+
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
-
-        mTitle = getTitle();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        mFragment1 = PlaceholderFragment.newInstance(1);
-        mFragment2 = PlaceholderFragment.newInstance(2);
-
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.container, mFragment1).add(R.id.container, mFragment2);
-        fragmentTransaction.commit();
-
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        if (mMapFragment == null) {
-            mMapFragment = MyMapFragment.newInstance();
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.container, mMapFragment);
-            fragmentTransaction.commit();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        for (Fragment f : mFragments) {
+            fragmentTransaction.hide(f);
         }
-        // update the main content by showing/hiding fragments
-        // todo: use real fragments lol
-        FragmentManager fragmentManager = getFragmentManager();
-        if (position == 0) {
-            fragmentManager.beginTransaction().show(mMapFragment).commit();
-        }
-        else if (position == 1){
-            fragmentManager.beginTransaction().show(mFragment1).hide(mMapFragment).commit();
-        }
-        else if (position == 2) {
-            fragmentManager.beginTransaction().show(mFragment2).hide(mMapFragment).commit();
-
-        }
-        /*
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, (position == 0 ? MapFragment.newInstance() : PlaceholderFragment.newInstance(position + 1)))
-                        .commit();*/
-
+        fragmentTransaction.show(mFragments[position]).commit();
     }
 
     public void onSectionAttached(int number) {
         switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
+            // Do something here
         }
-    }
-
-    public void restoreActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
-            restoreActionBar();
-            return true;
-        }
-        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

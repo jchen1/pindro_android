@@ -18,11 +18,17 @@
         android:textColor="@color/greytext"
         android:layout_gravity="top|center_horizontal"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/nav_drawer_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|left"
+        android:onClick="onNavDrawerButton"/>
+    <ImageButton
+        android:id="@+id/my_location_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
         android:onClick="onNavDrawerButton"/>
 
 </FrameLayout>

@@ -1,15 +1,23 @@
 package pindro.pindro.fragments;
 
 import android.app.Activity;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,6 +25,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 import pindro.pindro.R;
 
@@ -63,27 +72,71 @@ public class MyMapFragment extends Fragment {
         mMap.getUiSettings().setZoomControlsEnabled(false);
         mMap.setMyLocationEnabled(true);
 
-        // super hacky method to move the location button to the bottom right
-        // see http://stackoverflow.com/a/20750956
+        final View button = ((View) mMapView.findViewById(1).getParent()).findViewById(2);
+        button.setVisibility(View.GONE);
 
-        // Get the button view
-        View locationButton = ((View) mMapView.findViewById(1).getParent()).findViewById(2);
-
-        // and next place it, for exemple, on bottom right (as Google Maps app)
-        RelativeLayout.LayoutParams rlp = (RelativeLayout.LayoutParams) locationButton.getLayoutParams();
-        // position on right bottom
-        rlp.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
-        rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
-        rlp.setMargins(0, 0, 30, 30);
-
+        ImageButton locationButton = (ImageButton) v.findViewById(R.id.my_location_button);
+        locationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                button.performClick();
+            }
+        });
 
         MapsInitializer.initialize(this.getActivity());
-
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.1, -87.9), 10);
-        mMap.animateCamera(cameraUpdate);
+        mMap.animateCamera(getCenterLocationCameraUpdate(getCurrentLocation()));
 
         return v;
 
+    }
+
+    CameraUpdate getCenterLocationCameraUpdate(Location location) {
+        // Location lat-lng
+        LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+
+        // Location accuracy diameter (in meters)
+        float accuracy = location.getAccuracy() * 2;
+
+        // Screen measurements
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        // Use min(width, height) (to properly fit the screen
+        int screenSize = Math.min(metrics.widthPixels, metrics.heightPixels);
+
+        // Equators length
+        long equator = 40075004;
+
+        // The meters per pixel required to show the whole area the user might be located in
+        double requiredMpp = accuracy/screenSize;
+
+        // Calculate the zoom level
+        double zoomLevel = Math.min(((Math.log(equator / (256 * requiredMpp))) / Math.log(2)) + 1, 18);
+
+        Log.e("asdf", String.format("Accuracy: %f. Screen Width: %d, Height: %d",
+                accuracy, metrics.widthPixels, metrics.heightPixels));
+        Log.e("asdf", String.format("Required M/Px: %f Zoom Level: %f Approx Zoom Level: %d",
+                requiredMpp, zoomLevel, calculateZoomLevel(screenSize, accuracy)));
+
+        return CameraUpdateFactory.newLatLngZoom(loc, (float)(zoomLevel));
+    }
+
+    private int calculateZoomLevel(int screenWidth, float accuracy) {
+        double equatorLength = 40075004; // in meters
+        double metersPerPixel = equatorLength / 256;
+        int zoomLevel = 1;
+        while ((metersPerPixel * (double) screenWidth) > accuracy) {
+            metersPerPixel /= 2;
+            zoomLevel++;
+        }
+
+        return zoomLevel;
+    }
+
+    private Location getCurrentLocation() {
+        LocationManager service = (LocationManager)getActivity().getSystemService(getActivity().LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String provider = service.getBestProvider(criteria, false);
+        return service.getLastKnownLocation(provider);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
