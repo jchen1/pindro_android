@@ -8,27 +8,38 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 
-    <TextView android:id="@+id/textview"
+    <LinearLayout
+        android:id="@+id/floating_actionbar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World"
+        android:orientation="horizontal"
+        android:layout_gravity="top|center_horizontal"
         android:layout_margin="5dip"
         android:padding="5dip"
-        android:background="@drawable/rectangle"
-        android:textColor="@color/greytext"
-        android:layout_gravity="top|center_horizontal"/>
+        android:background="@drawable/rectangle">
+
+        <SearchView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/title_section1"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/my_location_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <ImageButton
+            android:id="@+id/button_list_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
 
     <ImageButton
         android:id="@+id/nav_drawer_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|left"
-        android:onClick="onNavDrawerButton"/>
-    <ImageButton
-        android:id="@+id/my_location_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
         android:onClick="onNavDrawerButton"/>
 
 </FrameLayout>
