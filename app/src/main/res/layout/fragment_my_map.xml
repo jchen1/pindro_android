@@ -19,17 +19,19 @@
         android:background="@android:drawable/dialog_holo_light_frame">
 
         <SearchView
-            android:layout_width="wrap_content"
+            android:id="@+id/map_searchview"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="@string/title_section1"
+            android:hint="@string/search"
             android:layout_weight="1"
             />
 
         <ImageButton
             android:id="@+id/my_location_button"
             android:layout_height="fill_parent"
-            android:layout_width="25dp"
-            android:layout_marginRight="5dp"
+            android:layout_width="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             android:scaleType="centerInside"
             android:src="@drawable/mylocation"
             android:background="@null"/>
@@ -38,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_drawer"
+            android:layout_marginRight="10dp"
             android:background="@null"/>
     </LinearLayout>
 
@@ -46,9 +49,8 @@
         android:id="@+id/nav_drawer_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dip"
-        android:paddingLeft="10dip"
-        android:paddingRight="8dip"
+        android:layout_marginBottom="20dip"
+        android:paddingRight="5dip"
         android:paddingTop="10dip"
         android:paddingBottom="10dip"
         android:layout_gravity="bottom|left"

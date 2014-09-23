@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -65,6 +66,7 @@ public class MyMapFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_my_map, container, false);
 
+        // Set up the UI settings for the GoogleMap
         mMapView = (MapView) v.findViewById(R.id.mapview);
         mMapView.onCreate(savedInstanceState);
 
@@ -75,6 +77,7 @@ public class MyMapFragment extends Fragment {
         mMap.getUiSettings().setTiltGesturesEnabled(false);
         mMap.setMyLocationEnabled(true);
 
+        // Hide the MyLocation button, but keep it programatically clickable for our own button
         final View button = ((View) mMapView.findViewById(1).getParent()).findViewById(2);
         button.setVisibility(View.GONE);
 
@@ -87,13 +90,28 @@ public class MyMapFragment extends Fragment {
         });
 
         MapsInitializer.initialize(this.getActivity());
-        mMap.animateCamera(getCenterLocationCameraUpdate(getCurrentLocation()));
+        mMap.animateCamera(getCenterLocationCameraUpdate());
+
+        // By default, only clicking the search icon will activate the search feature.
+        // The following code lets the entire SearchView activate it.
+        final SearchView sv = (SearchView) v.findViewById(R.id.map_searchview);
+        sv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sv.setIconified(false);
+                sv.requestFocus();
+            }
+        });
 
         return v;
 
     }
 
-    CameraUpdate getCenterLocationCameraUpdate(Location location) {
+    CameraUpdate getCenterLocationCameraUpdate() {
+        LocationManager service = (LocationManager)getActivity().getSystemService(getActivity().LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String provider = service.getBestProvider(criteria, false);
+        Location location = service.getLastKnownLocation(provider);
         // Location lat-lng
         LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
 
@@ -115,31 +133,7 @@ public class MyMapFragment extends Fragment {
         // Calculate the zoom level
         double zoomLevel = Math.min(((Math.log(equator / (256 * requiredMpp))) / Math.log(2)) + 1, 18);
 
-        Log.e("asdf", String.format("Accuracy: %f. Screen Width: %d, Height: %d",
-                accuracy, metrics.widthPixels, metrics.heightPixels));
-        Log.e("asdf", String.format("Required M/Px: %f Zoom Level: %f Approx Zoom Level: %d",
-                requiredMpp, zoomLevel, calculateZoomLevel(screenSize, accuracy)));
-
         return CameraUpdateFactory.newLatLngZoom(loc, (float)(zoomLevel));
-    }
-
-    private int calculateZoomLevel(int screenWidth, float accuracy) {
-        double equatorLength = 40075004; // in meters
-        double metersPerPixel = equatorLength / 256;
-        int zoomLevel = 1;
-        while ((metersPerPixel * (double) screenWidth) > accuracy) {
-            metersPerPixel /= 2;
-            zoomLevel++;
-        }
-
-        return zoomLevel;
-    }
-
-    private Location getCurrentLocation() {
-        LocationManager service = (LocationManager)getActivity().getSystemService(getActivity().LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        String provider = service.getBestProvider(criteria, false);
-        return service.getLastKnownLocation(provider);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
