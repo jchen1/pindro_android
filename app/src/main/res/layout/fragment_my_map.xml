@@ -16,22 +16,29 @@
         android:layout_gravity="top|center_horizontal"
         android:layout_margin="5dip"
         android:padding="5dip"
-        android:background="@drawable/rectangle">
+        android:background="@android:drawable/dialog_holo_light_frame">
 
         <SearchView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/title_section1"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            />
 
         <ImageButton
             android:id="@+id/my_location_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_height="fill_parent"
+            android:layout_width="25dp"
+            android:layout_marginRight="5dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/mylocation"
+            android:background="@null"/>
         <ImageButton
             android:id="@+id/button_list_view"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_drawer"
+            android:background="@null"/>
     </LinearLayout>
 
 
@@ -39,7 +46,14 @@
         android:id="@+id/nav_drawer_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="8dip"
+        android:paddingTop="10dip"
+        android:paddingBottom="10dip"
         android:layout_gravity="bottom|left"
-        android:onClick="onNavDrawerButton"/>
+        android:onClick="onNavDrawerButton"
+        android:src="@drawable/ic_drawer"
+        android:background="@drawable/rectangle_rightrounded"/>
 
 </FrameLayout>

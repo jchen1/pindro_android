@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -70,6 +71,8 @@ public class MyMapFragment extends Fragment {
         mMap = mMapView.getMap();
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(false);
+        mMap.getUiSettings().setRotateGesturesEnabled(false);
+        mMap.getUiSettings().setTiltGesturesEnabled(false);
         mMap.setMyLocationEnabled(true);
 
         final View button = ((View) mMapView.findViewById(1).getParent()).findViewById(2);
