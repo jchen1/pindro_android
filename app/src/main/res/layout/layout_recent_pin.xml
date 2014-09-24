@@ -2,11 +2,10 @@
 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/grid_pin_width" android:layout_height="250dp"
-    android:background="@drawable/rectangle_rounded"
+    android:layout_width="@dimen/grid_pin_width" android:layout_height="@dimen/grid_pin_height"
     android:orientation="vertical">
     <RelativeLayout
-        android:layout_width="match_parent" android:layout_height="@dimen/grid_image_height" >
+        android:layout_width="match_parent" android:layout_height="@dimen/grid_image_height">
 
         <ImageView
             android:id="@+id/recent_pin_image"
@@ -17,20 +16,22 @@
         <TextView
             android:id="@+id/recent_pin_name"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="48dp"
             android:layout_alignParentTop="true"
             android:textSize="16sp"
             android:gravity="center"
             android:layout_centerVertical="true"
-            android:textColor="@color/white"
-            android:background="@drawable/shadow_roundedtop"/>
+            android:textColor="@color/white87"
+            android:background="@drawable/shadow_topgradient"/>
 
     </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:text="Placeholder"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textColor="@color/white87"
+        android:background="@color/darkprimary"/>
 
 </LinearLayout>

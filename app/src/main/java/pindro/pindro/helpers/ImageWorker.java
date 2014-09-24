@@ -9,6 +9,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -49,16 +52,6 @@ public abstract class ImageWorker {
     private static final int MESSAGE_CLOSE = 3;
     protected Context mContext;
 
-
-    // taken from flatuicolors lol
-    private static final int[] colors = {
-            Color.rgb(26, 188, 156),
-            Color.rgb(155, 89, 182),
-            Color.rgb(46, 204, 113),
-            Color.rgb(241, 196, 15),
-            Color.rgb(230, 126, 34),
-            Color.rgb(231, 76, 60)
-    };
 
     protected ImageWorker(Context context, int imageWidth, int imageHeight) {
         mResources = context.getResources();
@@ -399,8 +392,9 @@ public abstract class ImageWorker {
                             drawable
                     });
             // Set background to loading bitmap
+            /*
             imageView.setBackground(
-                    new BitmapDrawable(mResources, mLoadingBitmap));
+                    new BitmapDrawable(mResources, mLoadingBitmap));*/
 
             imageView.setImageDrawable(td);
             td.startTransition(FADE_IN_TIME);
@@ -447,11 +441,6 @@ public abstract class ImageWorker {
         if (mImageCache != null) {
             mImageCache.clearCache();
         }
-    }
-
-
-    private int getRandomColor(String name) {
-        return colors[(int)((name.hashCode() & 0xffffffffl) % colors.length)];
     }
 
     public void flushCache() {

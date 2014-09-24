@@ -9,6 +9,5 @@
     android:horizontalSpacing="@dimen/grid_spacing"
     android:stretchMode="columnWidth"
     android:gravity="center"
-    android:paddingLeft="@dimen/grid_spacing"
-    android:paddingRight="@dimen/grid_spacing"
+    android:padding="@dimen/grid_spacing"
     />

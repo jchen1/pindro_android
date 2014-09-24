@@ -12,6 +12,8 @@ import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStream;
 
+import pindro.pindro.R;
+
 
 /**
  * A simple subclass of {@link ImageWorker} that resizes images from resources given a target width
@@ -52,7 +54,6 @@ public class ImageResizer extends ImageWorker {
     @Override
     protected Bitmap processBitmap(Object data) {
         return decodeSampledBitmapFromResource(mResources, (Integer)data, mImageWidth, mImageHeight, getImageCache());
-//        return decodeSampledBitmapFromUri(mContext, (ContactModel)data, mImageWidth, mImageHeight, getImageCache());
     }
 
     /**
