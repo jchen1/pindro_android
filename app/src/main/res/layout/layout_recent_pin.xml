@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="200dp"
-    android:layout_height="200dp" android:background="@drawable/rectangle_rounded">
 
-    <ImageView
-        android:id="@+id/recent_pin_image"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:scaleType="fitXY"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/grid_pin_width" android:layout_height="250dp"
+    android:background="@drawable/rectangle_rounded"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent" android:layout_height="@dimen/grid_image_height" >
+
+        <ImageView
+            android:id="@+id/recent_pin_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:id="@+id/recent_pin_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:background="@drawable/shadow_roundedtop"/>
+
+    </RelativeLayout>
+
     <TextView
-        android:id="@+id/recent_pin_name"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:text="Awesome event"/>
+        android:text="Placeholder"
+        android:gravity="center"/>
 
 </LinearLayout>

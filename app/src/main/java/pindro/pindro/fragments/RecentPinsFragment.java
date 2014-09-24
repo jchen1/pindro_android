@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import pindro.pindro.R;
 import pindro.pindro.adapters.RecentPinAdapter;
+import pindro.pindro.helpers.ImageCache;
+import pindro.pindro.helpers.ImageResizer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +28,8 @@ import pindro.pindro.adapters.RecentPinAdapter;
 public class RecentPinsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private ImageResizer mImageResizer;
+    private int mImageThumbWidth, mImageThumbHeight;
 
     /**
      * Use this factory method to create a new instance of
@@ -47,6 +51,14 @@ public class RecentPinsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mImageThumbWidth = getResources().getDimensionPixelSize(R.dimen.grid_image_width);
+        mImageThumbHeight = getResources().getDimensionPixelSize(R.dimen.grid_image_height);
+        ImageCache.ImageCacheParams cacheParams = new ImageCache.ImageCacheParams();
+        cacheParams.setMemCacheSizePercent(0.25f);
+
+        mImageResizer = new ImageResizer(getActivity(), mImageThumbWidth, mImageThumbHeight);
+        mImageResizer.addImageCache(getFragmentManager(), cacheParams);
     }
 
     @Override
@@ -55,7 +67,7 @@ public class RecentPinsFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_recent_pins, container, false);
         GridView gridview = (GridView) v.findViewById(R.id.gridview);
-        gridview.setAdapter(new RecentPinAdapter(getActivity()));
+        gridview.setAdapter(new RecentPinAdapter(getActivity(), mImageResizer));
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -85,9 +97,29 @@ public class RecentPinsFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mImageResizer.setExitTasksEarly(false);
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mImageResizer.setPauseWork(false);
+        mImageResizer.setExitTasksEarly(true);
+        mImageResizer.flushCache();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mImageResizer.closeCache();
     }
 
     /**
