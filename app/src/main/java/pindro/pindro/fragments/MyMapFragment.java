@@ -90,7 +90,7 @@ public class MyMapFragment extends Fragment {
         });
 
         MapsInitializer.initialize(this.getActivity());
-        mMap.animateCamera(getCenterLocationCameraUpdate());
+        mMap.moveCamera(getCenterLocationCameraUpdate());
 
         // By default, only clicking the search icon will activate the search feature.
         // The following code lets the entire SearchView activate it.

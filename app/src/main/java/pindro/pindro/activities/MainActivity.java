@@ -22,6 +22,7 @@ import com.google.android.gms.maps.MapFragment;
 import pindro.pindro.fragments.MyMapFragment;
 import pindro.pindro.fragments.NavigationDrawerFragment;
 import pindro.pindro.R;
+import pindro.pindro.fragments.RecentPinsFragment;
 
 
 public class MainActivity extends Activity
@@ -36,7 +37,8 @@ public class MainActivity extends Activity
     private static final int FRAGMENT_MAP_POSITION = 0;
     private static final int FRAGMENT_FRIENDS_POSITION = 1;
     private static final int FRAGMENT_RECENTS_POSITION = 2;
-    private static final int FRAGMENTS_SIZE = 3;
+    private static final int FRAGMENT_SETTINGS_POSITION = 3;
+    private static final int FRAGMENTS_SIZE = 4;
 
     private GoogleMap mGoogleMap;
 
@@ -47,7 +49,8 @@ public class MainActivity extends Activity
         mFragments = new Fragment[FRAGMENTS_SIZE];
         mFragments[FRAGMENT_MAP_POSITION] = MyMapFragment.newInstance();
         mFragments[FRAGMENT_FRIENDS_POSITION] = PlaceholderFragment.newInstance(FRAGMENT_FRIENDS_POSITION);
-        mFragments[FRAGMENT_RECENTS_POSITION] = PlaceholderFragment.newInstance(FRAGMENT_RECENTS_POSITION);
+        mFragments[FRAGMENT_RECENTS_POSITION] = RecentPinsFragment.newInstance();
+        mFragments[FRAGMENT_SETTINGS_POSITION] = PlaceholderFragment.newInstance(FRAGMENT_SETTINGS_POSITION);
 
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         for (Fragment f : mFragments) {

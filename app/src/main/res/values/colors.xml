@@ -2,4 +2,6 @@
 <resources>
     <color name="white">#ffffff</color>
     <color name="greytext">#aaaaaa</color>
+    <color name="profile_background">#444</color>
+    <color name="white87">#ffdedede</color>
 </resources>

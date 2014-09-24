@@ -4,10 +4,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"/>
+        android:layout_height="325dp"
+        android:background="@color/profile_background"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_marginTop="50dp"
+            android:padding="15dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_launcher"
+            android:background="@drawable/circle_profile"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/placeholder_name"
+            android:textColor="@color/white87"
+            android:layout_marginTop="15dp"
+            android:textSize="24sp"
+            android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
 
     <ListView
         android:id="@+id/nav_drawer_list"
@@ -16,7 +35,7 @@
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
-        android:background="#cccc"
+        android:background="#fff"
         tools:context="pindro.pindro.fragments.NavigationDrawerFragment" >
     </ListView>
 
