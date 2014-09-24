@@ -8,13 +8,15 @@
     <dimen name="navigation_drawer_width">280dp</dimen>
 
     <dimen name="grid_pin_width">160dp</dimen>
-    <dimen name="grid_pin_height">250dp</dimen>
+    <dimen name="grid_pin_height">240dp</dimen>
 
     <dimen name="grid_image_width">160dp</dimen>
-    <dimen name="grid_image_height">200dp</dimen>
+    <dimen name="grid_image_height">240dp</dimen>
 
     <dimen name="grid_spacing">4dp</dimen>
     <dimen name="grid_column_width">160dp</dimen>
 
     <dimen name="grid_corner_radius">3dp</dimen>
+    <dimen name="pin_profile_radius">32dp</dimen>
+    <dimen name="pin_profile_padding">8dp</dimen>
 </resources>

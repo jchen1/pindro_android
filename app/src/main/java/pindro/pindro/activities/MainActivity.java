@@ -6,6 +6,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -73,11 +74,17 @@ public class MainActivity extends Activity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        for (Fragment f : mFragments) {
-            fragmentTransaction.hide(f);
+        if (position == FRAGMENT_RECENTS_POSITION) {
+            Intent intent = new Intent(this, RecentPinsActivity.class);
+            startActivity(intent);
         }
-        fragmentTransaction.show(mFragments[position]).commit();
+        else {
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            for (Fragment f : mFragments) {
+                fragmentTransaction.hide(f);
+            }
+            fragmentTransaction.show(mFragments[position]).commit();
+        }
     }
 
     public void onSectionAttached(int number) {

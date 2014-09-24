@@ -5,4 +5,18 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!-- ActionBar styles -->
+    <style name="ActionBarTheme"
+        parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+    </style>
+
+    <style name="MyActionBar"
+        parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">>
+        <item name="android:icon">@android:color/transparent</item>
+        <item name="android:background">@color/primary</item>
+    </style>
+
 </resources>

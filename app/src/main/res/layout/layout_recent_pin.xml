@@ -2,7 +2,7 @@
 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="@dimen/grid_pin_width" android:layout_height="@dimen/grid_pin_height"
+    android:layout_width="match_parent" android:layout_height="@dimen/grid_pin_height"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent" android:layout_height="@dimen/grid_image_height">
@@ -19,19 +19,26 @@
             android:layout_height="48dp"
             android:layout_alignParentTop="true"
             android:textSize="16sp"
-            android:gravity="center"
-            android:layout_centerVertical="true"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="16dp"
             android:textColor="@color/white87"
-            android:background="@drawable/shadow_topgradient"/>
+            android:text="Placeholder"
+            android:background="@color/pin_shadow"/>
+
+        <LinearLayout
+            android:id="@+id/recent_pin_attendee_list"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:orientation="horizontal"
+            android:background="@color/pin_overlay">
+
+            </LinearLayout>
 
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="Placeholder"
-        android:gravity="center"
-        android:textColor="@color/white87"
-        android:background="@color/darkprimary"/>
 
 </LinearLayout>

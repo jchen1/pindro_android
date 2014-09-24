@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import pindro.pindro.R;
@@ -38,6 +40,7 @@ public class RecentPinAdapter extends BaseAdapter {
     private static class ViewHolder {
         protected ImageView pinImage;
         protected TextView pinName;
+        protected LinearLayout pinAttendees;
     }
 
     // create a new ImageView for each item referenced by the Adapter
@@ -49,6 +52,7 @@ public class RecentPinAdapter extends BaseAdapter {
             final ViewHolder viewHolder = new ViewHolder();
             viewHolder.pinImage = (ImageView) view.findViewById(R.id.recent_pin_image);
             viewHolder.pinName = (TextView) view.findViewById(R.id.recent_pin_name);
+            viewHolder.pinAttendees = (LinearLayout) view.findViewById(R.id.recent_pin_attendee_list);
             view.setTag(viewHolder);
 
         } else {
@@ -56,6 +60,16 @@ public class RecentPinAdapter extends BaseAdapter {
         }
         ViewHolder holder = (ViewHolder) view.getTag();
         mImageResizer.loadImage(mThumbIds[position], holder.pinImage);
+        while (holder.pinAttendees.getChildCount() < 8) {
+            ImageView image = new ImageView(mContext);
+            image.setImageResource(R.drawable.circle_blue);
+            int size = mContext.getResources().getDimensionPixelSize(R.dimen.pin_profile_radius);
+            image.setLayoutParams(new LinearLayout.LayoutParams(size, size, 0));
+            holder.pinAttendees.addView(image);
+            View blankView = new View(mContext);
+            blankView.setLayoutParams(new LinearLayout.LayoutParams(1, 1, 1));
+            holder.pinAttendees.addView(blankView);
+        }
 
 //        holder.pinImage.setImageBitmap(getRoundCornerBitmap(decodeSampledBitmapFromResource(mContext.getResources(),mThumbIds[position], holder.pinImage.getWidth(), holder.pinImage.getHeight()), 3));
         holder.pinName.setText("Awesome event " + position);
