@@ -1,13 +1,25 @@
 package pindro.pindro.activities;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.Spinner;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import pindro.pindro.R;
+import pindro.pindro.helpers.ActionBarUtils;
 
 public class RecentPinsActivity extends Activity {
 
@@ -40,6 +52,8 @@ public class RecentPinsActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.recent_pins, menu);
+        ActionBarUtils.setSearchStyle(this, (SearchView)menu.findItem(R.id.search).getActionView());
+
         return true;
     }
 

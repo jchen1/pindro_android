@@ -8,4 +8,5 @@
     <color name="darkprimary">#303f9f</color>
     <color name="pin_shadow">#99000000</color>
     <color name="pin_overlay">#ccffffff</color>
+    <color name="accent">#ff4081</color>
 </resources>
